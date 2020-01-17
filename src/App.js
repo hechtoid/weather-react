@@ -23,22 +23,35 @@ class App extends React.Component{
 
 
   render() {
-  return (
+let hourlies
+if (this.state.weather.hourly){
+  hourlies = this.state.weather.hourly.data.map(hour =>{
+    let timestamp = new Date(0)
+    timestamp.setUTCSeconds(hour.time)
+    return (
+      <div className="hourly-item"
+      key={timestamp}
+      >
+        {timestamp.getHours()} o'clock
+        <br></br> 
+        {hour.apparentTemperature} but actually {hour.temperature}.
+        <br></br>
+      {hour.summary}, {hour.precipProbability*100}% chance of precipitation.
+      </div>
+    )
+
+
+  })
+}
+    console.log(this.state.weather)
+
+return (
+
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="hourly-holder">
+        {hourlies}
+      </div>
+      
     </div>
   );
 }
